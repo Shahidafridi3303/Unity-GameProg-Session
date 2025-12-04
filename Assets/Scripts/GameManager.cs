@@ -96,7 +96,6 @@ public class GameManager : MonoBehaviour
         fallenBoxesText.text = "Boxes Fallen: " + fallenBoxes + "/" + targetBoxes;
 
         cam = Camera.main;
-        ball.DeactivateRb();
 
         UpdateBallCount();
         UpdateCoinUi();
@@ -169,7 +168,6 @@ public class GameManager : MonoBehaviour
         }
 
         // Move ball to drag start position and reset velocity
-        ball.DeactivateRb();
         //ball.transform.position = Slingshot.Instance.idlePosition.position;
         ball.transform.rotation = Quaternion.identity;
         ball.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;

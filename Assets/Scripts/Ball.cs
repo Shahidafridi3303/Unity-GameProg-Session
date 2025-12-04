@@ -37,76 +37,18 @@ public class Ball : MonoBehaviour
         rb.linearVelocity = force;
     }
 
-    public void ActivateRb()
-    {
-        rb.isKinematic = false;
-    }
-
-    public void DeactivateRb()
-    {
-        rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-        rb.isKinematic = true;
-        transform.rotation = Quaternion.identity;
-    }
-
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Chains"))
-        {
-            //Bomb bombScript = GetComponent<Bomb>();
-            Bomb bombScript = other.gameObject.GetComponentInParent<Bomb>();
+        //if (other.gameObject.CompareTag("Chains"))
+        //{
+        //    //Bomb bombScript = GetComponent<Bomb>();
+        //    Bomb bombScript = other.gameObject.GetComponentInParent<Bomb>();
 
-            if (bombScript != null)
-            {
-                bombScript.Trigger();
-            }
-        }
-    }
-
-    private void BoxDestoyerEffect(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Box"))
-        {
-            GameManager.Instance.UpdateFallenBoxesInstant(other.gameObject);
-        }
-    }
-
-    private void ExplosionEffect()
-    {
-        Collider2D[] hitBoxes = Physics2D.OverlapCircleAll(transform.position, ExplosionfieldOfImpact);
-
-        foreach (Collider2D col in hitBoxes)
-        {
-            if (col.CompareTag("Platform"))
-            {
-                Destroy(col.gameObject);
-            }
-
-            if (col.CompareTag("Treasure"))
-            {
-                col.GetComponent<Treasure>().ActivateRb();
-            }
-        }
-    }
-
-    private void FreezeEffect()
-    {
-        Collider2D[] hitBoxes = Physics2D.OverlapCircleAll(transform.position, FrozefieldOfImpact);
-
-        foreach (Collider2D col in hitBoxes)
-        {
-            if (col.CompareTag("Box"))
-            {
-                col.gameObject.layer = LayerMask.NameToLayer("FrozenLayer");
-
-                Box boxScript = col.GetComponent<Box>();
-                if (boxScript != null)
-                {
-                    boxScript.ApplyFreezeEffect();
-                }
-            }
-        }
+        //    if (bombScript != null)
+        //    {
+        //        bombScript.Trigger();
+        //    }
+        //}
     }
 
     void OnDrawGizmosSelected()
