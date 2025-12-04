@@ -27,7 +27,6 @@ public class Treasure : MonoBehaviour
         {
             Ball.Instance.BallCameraShake_Small(true, transform.position);
             UpdateGameManager(); 
-            SoundManager.instance.PlayTreasureActivateSound();
         }
     }
 
@@ -53,7 +52,7 @@ public class Treasure : MonoBehaviour
 
     public void DeactivateRb()
     {
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.isKinematic = true;
         col.isTrigger = true;

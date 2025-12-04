@@ -13,18 +13,17 @@ public class LootAreaTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            StartCoroutine(MoveSlingshotAfterDelay());
+            //StartCoroutine(MoveSlingshotAfterDelay());
         }
     }
 
-    private IEnumerator MoveSlingshotAfterDelay()
-    {
-        yield return new WaitForSeconds(delayInSeconds);
+    //private IEnumerator MoveSlingshotAfterDelay()
+    //{
+    //    yield return new WaitForSeconds(delayInSeconds);
 
-        Slingshot.transform.position = SlingshotTeleportLocation.transform.position;
-        Slingshot.GetComponent<Slingshot>().UpdateStripPosition();
-        GameManager.Instance.ActivateLootballs(isLeft);
-        SoundManager.instance.PlayMoveSound();
-        Destroy(gameObject);
-    }
+    //    Slingshot.transform.position = SlingshotTeleportLocation.transform.position;
+    //    Slingshot.GetComponent<Slingshot>().UpdateStripPosition();
+    //    GameManager.Instance.ActivateLootballs(isLeft);
+    //    Destroy(gameObject);
+    //}
 }

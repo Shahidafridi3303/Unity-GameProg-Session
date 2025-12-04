@@ -10,7 +10,6 @@ public class Laser : MonoBehaviour
     private bool isActive = true;
     public bool autoReactivate = false;
     public float reactivateDelay = 3f;
-    public Button laserDeactivatorButton;
 
     private void Update()
     {
@@ -28,7 +27,6 @@ public class Laser : MonoBehaviour
         {
             Ball.Instance.BallCameraShake();
             GameManager.Instance.ResetBall();
-            SoundManager.instance.PlayLaserSound();
         }
 
         Draw2DRay(laserFirePoint.position, _hit.collider != null ? _hit.point : laserFirePoint.transform.right * defDistanceRay);
@@ -44,16 +42,10 @@ public class Laser : MonoBehaviour
     {
         isActive = false;
         m_lineRenderer.enabled = false;
-        SoundManager.instance.PlayNotYourMoveSound();
 
         if (autoReactivate)
         {
             StartCoroutine(ReactivateLaserAfterDelay());
-        }
-
-        if (laserDeactivatorButton)
-        {
-            laserDeactivatorButton.UpdateLeverState(false);
         }
     }
 
@@ -61,12 +53,6 @@ public class Laser : MonoBehaviour
     {
         isActive = true;
         m_lineRenderer.enabled = true;
-        SoundManager.instance.PlayMoveSound();
-
-        if (laserDeactivatorButton)
-        {
-            laserDeactivatorButton.UpdateLeverState(true);
-        }
     }
 
     IEnumerator ReactivateLaserAfterDelay()

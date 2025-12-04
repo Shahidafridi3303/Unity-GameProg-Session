@@ -7,7 +7,6 @@ public class BoxCollisionChecker : MonoBehaviour
         if (other.gameObject.CompareTag("Box"))
         {
             GameManager.Instance.UpdateFallenBoxes(other.gameObject);
-            SoundManager.instance.PlayBoxFallSound();
         }
     }
 }

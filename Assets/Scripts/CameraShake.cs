@@ -43,22 +43,6 @@ public class CameraShake : MonoBehaviour
         {
             StartCoroutine(ShakeCoroutine(shakeDuration_small, shakeMagnitude_small));
         }
-
-        if (Balloon.Instance.AlreadyTravelling())
-        {
-            return;
-        }
-
-        if (right)
-        {
-            right = false;
-            Balloon.Instance.EnableMove(true);
-        }
-        else
-        {
-            right = true;
-            Balloon.Instance.EnableMove(false);
-        }
     }
 
     private IEnumerator ShakeCoroutine(float duration, float magnitude)

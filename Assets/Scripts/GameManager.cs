@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public BallIdentity ballIdentity = BallIdentity.Bouncyball;
 
     public Ball ball;
-    public Trajectory trajectory;
+    //public Trajectory trajectory;
     [SerializeField] float pushForce = 4f;
     [SerializeField] float lootBallPushForce = 10f;
 
@@ -73,9 +73,6 @@ public class GameManager : MonoBehaviour
     private Vector3 startPosition;
     private float localPushForce;
 
-    private bool gameEnded;
-    private bool canEnablePower = true;
-    private bool isCancelledDrag = false;
     private bool wasLastLootball = false;
 
     void Awake()
@@ -109,26 +106,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-             CancelDrag();
+             //CancelDrag();
         }
 
         if (isDragging)
         {
-            OnDrag();
+            //OnDrag();
         }
-    }
-
-    private void CancelDrag()
-    {
-        if (!isDragging) return;
-
-        isCancelledDrag = true;
-
-        isDragging = false;
-        trajectory.Hide();
-        ResetBall();
-        Slingshot.Instance.OnMouseUpEvent();
-        SoundManager.instance.PlayButtonClick();
     }
 
     private void OnMouseDown()
@@ -140,135 +124,23 @@ public class GameManager : MonoBehaviour
     private void OnMouseUp()
     {
         isDragging = false;
-        OnDragEnd();
+        //OnDragEnd();
     }
 
     void OnDragStart()
     {
-        if (gameEnded) { return; }
+        //if (gameEnded) { return; }
 
-        ball.DeactivateRb();
-        ball.transform.position = Slingshot.Instance.idlePosition.position;
-        ball.transform.rotation = Quaternion.identity;
+        //ball.DeactivateRb();
+        //ball.transform.position = Slingshot.Instance.idlePosition.position;
+        //ball.transform.rotation = Quaternion.identity;
 
-        startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
+        //startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        trajectory.Show();
-        Slingshot.Instance.OnMouseDownEvent();
+        //trajectory.Show();
+        //Slingshot.Instance.OnMouseDownEvent();
 
-        SoundManager.instance.PlayCameraShakeSound();
-    }
-
-    void OnDrag()
-    {
-        if (gameEnded) { return; }
-
-        endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-        distance = Vector2.Distance(startPoint, endPoint);
-
-        // Limit the drag distance
-        distance = Mathf.Min(distance, maxDragDistance);
-
-        direction = (startPoint - endPoint).normalized;
-        force = direction * distance * pushForce;
-
-        if (ballIdentity == BallIdentity.Bouncyball)
-        {
-            trajectory.UpdateDots(ball.pos, force, false);
-        }
-        else if (ballIdentity == BallIdentity.Lootball)
-        {
-            trajectory.UpdateDots(ball.pos, force, true);
-        }
-    }
-
-    void OnDragEnd()
-    {
-        if (gameEnded) { return; }
-
-        if (isCancelledDrag == true)
-        {
-            isCancelledDrag = false;
-            return;
-        }
-
-        canEnablePower = false;
-
-        if (ballIdentity == BallIdentity.Bouncyball)
-        {
-            currentBalls--;
-            UpdateBallCount();
-
-            if (currentBalls == 0)
-            {
-                gameEnded = true;
-            }
-        }
-        else if(ballIdentity == BallIdentity.Lootball)
-        {
-            currentLootBalls--;
-            UpdateLootBallCount();
-
-            if (currentLootBalls == 0)
-            {
-                wasLastLootball = true;
-
-                ballIdentity = BallIdentity.Bouncyball;
-                currentLootBalls = maxLootballs;
-                UpdateLootBallCount();
-                LootBallsCountL.text = "x" + currentLootBalls;
-                LootBallsCountR.text = currentLootBalls + "x";
-
-                LootBallsCountL.gameObject.SetActive(false);
-                LootBallsCountR.gameObject.SetActive(false);
-                SlingshotBase.gameObject.SetActive(true);
-
-                StartCoroutine(ResetBallOriginalScale());
-
-                transform.position = startPosition;
-                Slingshot.Instance.UpdateStripPosition();
-
-                gameEnded = true;
-            }
-        }
-
-        ball.ActivateRb();
-        ball.Push(force);
-        Slingshot.Instance.OnMouseUpEvent();
-        ball.GetComponent<Ball>().Release();
-
-        // Restart the auto-reset coroutine
-        if (resetBallCoroutine != null)
-        {
-            StopCoroutine(resetBallCoroutine);
-        }
-
-        if (successPanelOpened == false)
-        {
-            resetBallCoroutine = StartCoroutine(AutoSetDragPosition());
-        }
-    }
-
-    IEnumerator AutoSetDragPosition()
-    {
-        if (ballIdentity == BallIdentity.Bouncyball)
-        {
-            yield return new WaitForSeconds(resetPositionDelay);
-        }
-        else if (ballIdentity == BallIdentity.Lootball)
-        {
-            yield return new WaitForSeconds(lootResetPositionDelay);
-        }
-
-        if (ballIdentity == BallIdentity.Bouncyball)
-        {
-            if (currentBalls == 0)
-            {
-                OpenFailurePanel();
-            }
-        }
-
-        ResetBall();
+        //SoundManager.instance.PlayCameraShakeSound();
     }
 
     IEnumerator ResetBallOriginalScale()
@@ -286,7 +158,6 @@ public class GameManager : MonoBehaviour
     {
         ball.transform.localScale *= 2.0f;
         pushForce = localPushForce;
-        gameEnded = false;
     }
 
     public void ResetBall()
@@ -297,15 +168,11 @@ public class GameManager : MonoBehaviour
             ResetScale();
         }
 
-        canEnablePower = true;
-
         // Move ball to drag start position and reset velocity
         ball.DeactivateRb();
-        ball.transform.position = Slingshot.Instance.idlePosition.position;
+        //ball.transform.position = Slingshot.Instance.idlePosition.position;
         ball.transform.rotation = Quaternion.identity;
-        ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-        ball.collisionCount = 5;
+        ball.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
     }
 
     public void UpdateFallenBoxes(GameObject box)
@@ -359,7 +226,6 @@ public class GameManager : MonoBehaviour
 
         DestroyBalloons();
 
-        gameEnded = true;
     }
 
     public void DestroyBalloons()
@@ -406,12 +272,10 @@ public class GameManager : MonoBehaviour
         Timer.Instance.StopTimer();
         failurePanel.SetActive(true);
 
-        gameEnded = true;
     }
 
     public void LeavePressed_ToggleDrag(bool yes)
     {
-        gameEnded = yes;
     }
 
     public void UpdateBallCount()
@@ -478,52 +342,5 @@ public class GameManager : MonoBehaviour
     {
         LootBallsCountL.text = "x" + currentLootBalls;
         LootBallsCountR.text = currentLootBalls + "x";
-    }
-
-    public void SetBallTypeFromUI(int type)
-    {
-        CancelDrag();
-
-        if (canEnablePower == false) return;
-
-        if (type == 1)
-        {
-            if (coins > bombBallCost)
-            {
-                ball.SetBallType((BallType)type);
-                coins = coins - bombBallCost;
-                UpdateCoinUi();
-            }
-        }
-
-        if (type == 2)
-        {
-            if (coins > freezingBallCost)
-            {
-                ball.SetBallType((BallType)type);
-                coins = coins - freezingBallCost;
-                UpdateCoinUi();
-            }
-        }
-
-        if (type == 3)
-        {
-            if (coins > explosionBallCost)
-            {
-                ball.SetBallType((BallType)type);
-                coins = coins - explosionBallCost;
-                UpdateCoinUi();
-            }
-        }
-
-        if (type == 4)
-        {
-            if (coins > BoxDestoyerBallCost)
-            {
-                ball.SetBallType((BallType)type);
-                coins = coins - BoxDestoyerBallCost;
-                UpdateCoinUi();
-            }
-        }
     }
 }

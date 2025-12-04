@@ -100,7 +100,6 @@ public class Bomb : MonoBehaviour
 
         bomb.gameObject.SetActive(false);
         CameraShake.Instance.Shake();
-        SoundManager.instance.PlayBombExplodeSound();
         GameObject explosionEffectIns = Instantiate(explosionEffect, transform.position, Quaternion.identity);
         explosionEffectIns.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         Destroy(gameObject, effectDestroyDelay);
