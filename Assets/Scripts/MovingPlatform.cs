@@ -18,8 +18,8 @@ public class MovingPlatform : MonoBehaviour
     [Header("Movement Settings")]
     public MovementDirection movementDirection = MovementDirection.Horizontal;
     public float speed = 2f;         // Speed of movement
-    public float minDistance = 0f;   // Minimum movement limit
-    public float maxDistance = 5f;   // Maximum movement limit
+    private float minDistance = 0f;   // Minimum movement limit
+    private float maxDistance = 2.8f;   // Maximum movement limit
 
     [Header("Initial Movement Settings")]
     public InitialMovement initialMovement = InitialMovement.Forward;

@@ -17,25 +17,7 @@ public class Ball : MonoBehaviour
     public float FrozefieldOfImpact;
     public float ExplosionfieldOfImpact;
 
-    public float force;
-
     public static Ball Instance;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<CircleCollider2D>();
-    }
-
-    public void Push(Vector2 force)
-    {
-        rb.linearVelocity = force;
-    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -49,6 +31,30 @@ public class Ball : MonoBehaviour
         //        bombScript.Trigger();
         //    }
         //}
+
+        PlatformColorChanger Platf_ChngColr = other.gameObject.GetComponentInParent<PlatformColorChanger>();
+        Bomb bomb = other.gameObject.GetComponentInParent<Bomb>();
+        Spike spike = other.gameObject.GetComponent<Spike>();
+
+        if (Platf_ChngColr)
+        {
+            Platf_ChngColr.ApplyColor();
+        }
+        if (bomb)
+        {
+            bomb.explode();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Spike spike = other.gameObject.GetComponent<Spike>();
+
+        if (spike)
+        {
+            BallCameraShake();
+            GameManager.Instance.OpenFailureWithDelay();
+        }
     }
 
     void OnDrawGizmosSelected()

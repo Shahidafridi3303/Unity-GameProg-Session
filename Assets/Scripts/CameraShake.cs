@@ -11,8 +11,6 @@ public class CameraShake : MonoBehaviour
     public float shakeDuration_small = 0.25f;
     public float shakeMagnitude_small = 0.05f;
 
-    private bool right = true;
-
     private void Awake()
     {
         if (Instance == null)
@@ -33,7 +31,6 @@ public class CameraShake : MonoBehaviour
     public void Shake(bool small = false)
     {
         PlatformColorChanger.Instance.ChangePlatformColors();
-        //SoundManager.instance.PlayCameraShakeSound();
 
         if (!small)
         {

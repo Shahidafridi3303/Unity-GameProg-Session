@@ -18,7 +18,7 @@ public class Treasure : MonoBehaviour
 
     void Start()
     {
-        DeactivateRb();
+        // DeactivateRb();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -39,23 +39,6 @@ public class Treasure : MonoBehaviour
     public void UpdateGameManager()
     {
         amount = Random.Range(minAmount, maxAmount);
-        GameManager.Instance.IncrementCoinCount(amount);
         Destroy(gameObject);
-    }
-
-    public void ActivateRb()
-    {
-        rb.isKinematic = false;
-        col.isTrigger = false;
-        Invoke("DeactivateRb", 1.0f);
-    }
-
-    public void DeactivateRb()
-    {
-        rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-        rb.isKinematic = true;
-        col.isTrigger = true;
-        transform.rotation = Quaternion.identity;
     }
 }

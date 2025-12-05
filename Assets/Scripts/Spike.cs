@@ -14,13 +14,13 @@ public class Spike : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Ball"))
-        {
-            Ball.Instance.BallCameraShake();
-            GameManager.Instance.ResetBall();
-            Destroy(gameObject);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.gameObject.CompareTag("Ball"))
+    //    {
+    //        Ball.Instance.BallCameraShake();
+    //        GameManager.Instance.ResetBall();
+    //        Destroy(gameObject);
+    //    }
+    //}
 }
