@@ -12,26 +12,59 @@ public class Ball : MonoBehaviour
 
     [HideInInspector] public Vector3 pos { get { return transform.position; } }
 
-    // ExplodeType property
-    public float BombfieldOfImpact;
-    public float FrozefieldOfImpact;
-    public float ExplosionfieldOfImpact;
-
     public static Ball Instance;
+
+    [Header("Player Control")]
+    public float moveSpeed = 5f;
+    public bool useRawInput = true;   
+    private float defaultGravity; 
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        defaultGravity = rb.gravityScale;
+        col = GetComponent<CircleCollider2D>();
+
+        if (rb == null)
+        {
+            Debug.LogError("Ball: Rigidbody2D missing!");
+        }
+        else
+        {
+            defaultGravity = rb.gravityScale;
+        }
+
+        if (Instance == null) Instance = this;
+    }
+
+    private void Update()
+    {
+        HandlePlayerControl();
+    }
+
+    private void HandlePlayerControl()
+    {
+        // read input (WASD or arrow keys)
+        float h = useRawInput ? Input.GetAxisRaw("Horizontal") : Input.GetAxis("Horizontal");
+        float v = useRawInput ? Input.GetAxisRaw("Vertical") : Input.GetAxis("Vertical");
+
+        Vector2 input = new Vector2(h, v);
+
+        if (input.sqrMagnitude > 0f)
+        {
+            rb.gravityScale = 0f;
+
+            Vector2 targetVel = input.normalized * moveSpeed;
+            rb.linearVelocity = targetVel;
+        }
+        else
+        {
+            rb.gravityScale = defaultGravity;
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        //if (other.gameObject.CompareTag("Chains"))
-        //{
-        //    //Bomb bombScript = GetComponent<Bomb>();
-        //    Bomb bombScript = other.gameObject.GetComponentInParent<Bomb>();
-
-        //    if (bombScript != null)
-        //    {
-        //        bombScript.Trigger();
-        //    }
-        //}
-
         PlatformColorChanger Platf_ChngColr = other.gameObject.GetComponentInParent<PlatformColorChanger>();
         Bomb bomb = other.gameObject.GetComponentInParent<Bomb>();
         Spike spike = other.gameObject.GetComponent<Spike>();
@@ -55,18 +88,6 @@ public class Ball : MonoBehaviour
             BallCameraShake();
             GameManager.Instance.OpenFailureWithDelay();
         }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, BombfieldOfImpact);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, FrozefieldOfImpact);
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, ExplosionfieldOfImpact);
     }
 
     public void BallCameraShake()

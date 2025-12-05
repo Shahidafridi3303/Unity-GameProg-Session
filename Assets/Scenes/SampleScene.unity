@@ -374,6 +374,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spikes
       objectReference: {fileID: 0}
+    - target: {fileID: 3291269763186535159, guid: 3e502705e463b9a4f8734a6a09913750,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6640243753232654923, guid: 3e502705e463b9a4f8734a6a09913750,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -492,6 +497,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser
       objectReference: {fileID: 0}
+    - target: {fileID: 5670043996552185901, guid: 0158e297b5c322a438ddd7c0202b8a62,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -509,6 +519,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MovingPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 494585432496581523, guid: 96b77f5c436847f498a6586358e61f18,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2546903255256790421, guid: 96b77f5c436847f498a6586358e61f18,
         type: 3}
@@ -577,6 +592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Platforms
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147875170450164078, guid: c7f8c0d5eb369aa4a997cfeaf642b375,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6512779119543330674, guid: c7f8c0d5eb369aa4a997cfeaf642b375,
         type: 3}
@@ -764,6 +784,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bombs
       objectReference: {fileID: 0}
+    - target: {fileID: 5120255421019613474, guid: 3b186c33325b643499618cb2acc4ff1f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -917,6 +942,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boxes
+      objectReference: {fileID: 0}
+    - target: {fileID: 87941450517489166, guid: 218b79d1f803e544db7def577860eab2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2480543770282912602, guid: 218b79d1f803e544db7def577860eab2,
         type: 3}
